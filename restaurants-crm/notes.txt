@@ -1,0 +1,31 @@
+frontend is react with typoscript 
+restaurants-crm2 is core php using api 
+
+
+react run on localhost:3000
+php run on http://127.0.0.1:8000
+
+above php change local server
+
+node -v
+v20.13.1
+
+php -version
+PHP 8.0.30 
+
+Database 
+restaurants.sql
+
+start react  command : npm start
+start php command :  php -S 0.0.0.0:8000 index.php
+
+bulk upload items csv.
+item.csv
+ 
+
+bulk upload Resident csv.
+Resident.csv
+ 
+
+.env file api  
+
