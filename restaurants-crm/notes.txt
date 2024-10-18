@@ -19,6 +19,9 @@ restaurants.sql
 start react  command : npm start
 start php command :  php -S 0.0.0.0:8000 index.php
 
+email = john@example.com
+password = password123
+
 bulk upload items csv.
 item.csv
  
