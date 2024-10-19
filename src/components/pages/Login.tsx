@@ -55,6 +55,9 @@ const Login: React.FC = () => {
             </div>
             {/* Submit Button */}
             <button type="submit" className="btn btn-primary w-100">Login</button>
+            <div className='col-md-12 mt-3'>
+              <a href='/register' className="btn-primary">Register</a>
+            </div>
           </form>
         </div>
       </div>
