@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 13, 2024 at 08:21 AM
+-- Generation Time: Oct 19, 2024 at 10:35 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -61,8 +61,8 @@ CREATE TABLE `food_items` (
 --
 
 INSERT INTO `food_items` (`id`, `name`, `category`, `iddsi_level`) VALUES
-(5, 'noodles', 'chicken', 'thincrus'),
-(7, 'hydrabadi biryani', 'veg', 'Mildly Thick');
+(5, 'Mashed Potatoes', 'veg', 'Thin'),
+(6, 'Chicken Soup', 'chicken', 'Slightly Thick');
 
 -- --------------------------------------------------------
 
@@ -73,6 +73,7 @@ INSERT INTO `food_items` (`id`, `name`, `category`, `iddsi_level`) VALUES
 CREATE TABLE `residents` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
+  `category` varchar(255) NOT NULL,
   `iddsi_level` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -80,9 +81,12 @@ CREATE TABLE `residents` (
 -- Dumping data for table `residents`
 --
 
-INSERT INTO `residents` (`id`, `name`, `iddsi_level`) VALUES
-(1, 'John Doe', 'Thin'),
-(2, 'Jane Smith', 'Thin');
+INSERT INTO `residents` (`id`, `name`, `category`, `iddsi_level`) VALUES
+(2, 'Pizza', 'chicken', 'Thin'),
+(3, 'Test App', 'chicken', 'Slightly Thick'),
+(4, 'Mashed Potatoes', 'veg', 'Level 4'),
+(5, 'Chicken Soup', 'chicken', 'Level 2'),
+(6, 'test', 'chicken', 'Thin');
 
 -- --------------------------------------------------------
 
@@ -106,10 +110,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'john_doe', 'john@example.com', NULL, '$2y$10$xyWOn3oQlkYMYCjg03KA5OW.UwJ4LgAPxqn4Rc5lMYypBuANJ4GCK', NULL, NULL, NULL),
-(2, 'john_doe', 'john@gmail.com', NULL, '$2y$10$cVZnh4as4U39jrnQ5HRPk.Cm4R9TpMst9959t5lVvhNa.yHQNJIwa', NULL, NULL, NULL),
-(3, 'hemna', 'hm@example.com', NULL, '$2y$10$gYxfuGvW/wStAA98s8MWQ.x0KM5dau7Vb01JkLI1Qe9lz6ItREN/i', NULL, NULL, NULL),
-(4, 'tech@flickstree.com', 'tech@flickstree.com', NULL, '$2y$10$cZ8SgFqLvv3Y4aVktjYKLOic2EfUGkBi3zpLhguMl2qysMbDzwb.m', NULL, NULL, NULL);
+(1, 'john', 'john@example.com', NULL, '$2y$10$H91CXbNIVlcheSK6qDwIFOK3KejFxVYhp1qY0WSF08z6bIL5WmXsG', NULL, NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -154,19 +155,19 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `food_items`
 --
 ALTER TABLE `food_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `residents`
 --
 ALTER TABLE `residents`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
