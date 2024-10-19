@@ -1,9 +1,9 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Login from '../components/pages/Login';
-import Items from '../components/pages/Items';
-import Residents from '../components/pages/Residents';
-import Register from '../components/pages/Register';
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Login from "../components/pages/Login";
+import Items from "../components/pages/Items";
+import Residents from "../components/pages/Residents";
+import Register from "../components/pages/Register";
 
 const AppRoutes = () => {
   return (

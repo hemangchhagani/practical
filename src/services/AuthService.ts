@@ -14,28 +14,27 @@ const AuthService = {
 
   login: (email: string, password: string) => {
     return axios
-      .post(
-        API_URL + '/login',
-        {
-          email,
-          password,
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
+      .post(API_URL + '/login', { email, password })
       .then((response) => {
         if (response.data.token) {
           localStorage.setItem('user', JSON.stringify(response.data));
-          return response.data; // Successful login
+          return response.data;
         } else {
-          // If no token, login is unsuccessful (server didn't provide token)
           throw new Error('Invalid login credentials.');
         }
+      })
+      .catch((error) => {
+        console.error('Error during login:', error);
+        // Log the error response, if available
+        if (error.response) {
+          console.error('Response data:', error.response.data);
+          console.error('Response status:', error.response.status);
+          console.error('Response headers:', error.response.headers);
+        }
+        throw error; // Re-throw the error if necessary
       });
   },
+  
 
   logout: () => {
     localStorage.removeItem('user');

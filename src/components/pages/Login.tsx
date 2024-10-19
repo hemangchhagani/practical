@@ -13,7 +13,7 @@ const Login: React.FC = () => {
     AuthService.login(data.email, data.password)
       .then(() => {
         alert('Login successful!');
-        navigate('/items'); // Redirect after login
+        navigate('/food-items'); // Redirect after login
       })
       .catch(error => {
         alert('Error during login: ' + error);
