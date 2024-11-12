@@ -39,6 +39,7 @@ DB_NAME=restaurants
 DB_USER=root
 DB_PASS=
 
+practical\restaurant\App\Database\connection.php database connection change manually
 
 JWT_SECRET=your-secret-key
 JWT_ISSUER=http://localhost
