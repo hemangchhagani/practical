@@ -23,25 +23,29 @@ const FoodItems: React.FC = () => {
     fetchItemsData();
   }, []);
 
-  // Fetch items data from the backend
-  const fetchItemsData = async () => {
-    setLoading(true); // Show loading state
-    try {
-      const response = await getItems(); // Adjust based on your service
-      const items = response.data || response;
-      const formattedItems = items.map((item: any) => ({
-        id: item.id,
-        name: item.name,
-        category: item.category,
-        iddsi_level: item.iddsi_level,
-      }));
-      setItemsData(formattedItems);
-    } catch (error) {
-      console.error("Error fetching items data:", error);
-    } finally {
-      setLoading(false); // Hide loading state
-    }
-  };
+ // Fetch items data from the backend
+const fetchItemsData = async () => {
+  setLoading(true); // Show loading state
+  try {
+    const response = await getItems(); // Fetch the data from your service
+    // Correctly extract the data array from the response
+    const items = response?.data?.data || [];
+
+    // Map and format items safely
+    const formattedItems = items.map((item: any) => ({
+      id: item.id || "",
+      name: item.name || "",
+      category: item.category || "",
+      iddsi_level: item.iddsi_level || "",
+    }));
+
+    setItemsData(formattedItems);
+  } catch (error) {
+    console.error("Error fetching items data:", error);
+  } finally {
+    setLoading(false); // Hide loading state
+  }
+};
 
   // Handle opening the form modal
   const handleShow = () => {
@@ -62,9 +66,12 @@ const FoodItems: React.FC = () => {
     setEditMode(true);
     setCurrentItem(item);
     setShowModal(true);
-    setValue("name", item.name);
-    setValue("category", item.category);
-    setValue("iddsi_level", item.iddsi_level);
+    // Use reset to initialize the form with current item values
+    reset({
+      name: item.name,
+      category: item.category,
+      iddsi_level: item.iddsi_level,
+    });
   };
 
   // Handle delete item

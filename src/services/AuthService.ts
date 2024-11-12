@@ -12,29 +12,22 @@ const AuthService = {
     });
   },
 
-  login: (email: string, password: string) => {
-    return axios
-      .post(API_URL + '/login', { email, password })
-      .then((response) => {
-        if (response.data.token) {
-          localStorage.setItem('user', JSON.stringify(response.data));
-          return response.data;
-        } else {
-          throw new Error('Invalid login credentials.');
-        }
-      })
-      .catch((error) => {
-        console.error('Error during login:', error);
-        // Log the error response, if available
-        if (error.response) {
-          console.error('Response data:', error.response.data);
-          console.error('Response status:', error.response.status);
-          console.error('Response headers:', error.response.headers);
-        }
-        throw error; // Re-throw the error if necessary
-      });
+  async login(email: string, password: string) {
+    try {
+      const response = await axios.post(API_URL + '/login', { email, password });
+      
+      // Check if response is successful and has a status code 200
+      if (response.status === 200 ) {
+        const token = response.data.data.token;
+        localStorage.setItem('token', token); // Store token in localStorage
+        return response.data; // Return the entire response for further use
+      } else {
+        throw new Error(response.data.message || 'Invalid login credentials');
+      }
+    } catch (error: any) {
+      throw new Error(error.response?.data?.message || 'Error during login');
+    }
   },
-  
 
   logout: () => {
     localStorage.removeItem('user');

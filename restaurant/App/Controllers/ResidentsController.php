@@ -22,8 +22,8 @@ class ResidentsController
             http_response_code(201);
             echo json_encode(['message' => 'Resident created successfully']);
         } catch (\Exception $e) {
-            http_response_code($e->getCode() ?: 500);
-            echo json_encode(['message' => $e->getMessage()]);
+            $result = array('message' => $e->getMessage() , 'status' => $e->getCode() ?: 500 );
+            return $result;
         }
     }
 
@@ -32,10 +32,12 @@ class ResidentsController
     {
         try {
             $residents = $this->ResidentsService->getAllResidents();
-            echo json_encode($residents);
+            //echo json_encode($residents);
+            $result = array('data' => $residents, 'status' => 200 );
+            return $result;
         } catch (\Exception $e) {
-            http_response_code($e->getCode() ?: 500);
-            echo json_encode(['message' => $e->getMessage()]);
+           $result = array('message' => $e->getMessage() , 'status' => $e->getCode() ?: 500 );
+            return $result;
         }
     }
 
@@ -44,10 +46,12 @@ class ResidentsController
     {
         try {
             $resident = $this->ResidentsService->getResidentById($id);
-            echo json_encode($resident);
+            //echo json_encode($resident);
+            $result = array('data' => $resident, 'status' => 200 );
+            return $result;
         } catch (\Exception $e) {
-            http_response_code($e->getCode() ?: 500);
-            echo json_encode(['message' => $e->getMessage()]);
+           $result = array('message' => $e->getMessage() , 'status' => $e->getCode() ?: 500 );
+            return $result;
         }
     }
 
@@ -57,10 +61,12 @@ class ResidentsController
         try {
             $input = json_decode(file_get_contents('php://input'), true);
             $this->ResidentsService->updateResident($id, $input);
-            echo json_encode(['message' => 'Resident updated successfully']);
+            $result = array('message' => 'Resident updated successfully', 'status' => 200 );
+            return $result;
+            //echo json_encode(['message' => 'Resident updated successfully']);
         } catch (\Exception $e) {
-            http_response_code($e->getCode() ?: 500);
-            echo json_encode(['message' => $e->getMessage()]);
+          $result = array('message' => $e->getMessage() , 'status' => $e->getCode() ?: 500 );
+            return $result;
         }
     }
 
@@ -69,10 +75,13 @@ class ResidentsController
     {
         try {
             $this->ResidentsService->deleteResident($id);
-            echo json_encode(['message' => 'Resident deleted successfully']);
+            //echo json_encode(['message' => 'Resident deleted successfully']);
+             $result = array('message' => 'Resident deleted successfully', 'status' => 200 );
+            return $result;
+
         } catch (\Exception $e) {
-            http_response_code($e->getCode() ?: 500);
-            echo json_encode(['message' => $e->getMessage()]);
+           $result = array('message' => $e->getMessage() , 'status' => $e->getCode() ?: 500 );
+            return $result;
         }
     }
     

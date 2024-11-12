@@ -8,8 +8,15 @@ interface ApiError {
   response?: {
     data: {
       message: string;
+      status: number;
     };
   };
+}
+
+interface ApiResponse {
+  status: number;
+  message?: string;
+  data?: any;
 }
 
 const Register: React.FC = () => {
@@ -18,8 +25,24 @@ const Register: React.FC = () => {
 
   const onSubmit = async (data: IRegisterForm) => {
     try {
-      await AuthService.register(data.username, data.email, data.password);
+      const res: ApiResponse = await AuthService.register(data.username, data.email, data.password);
+     
+    // Check the actual structure of the response object
+    console.log("API Response:", res);
+
+    // Attempt different status checks based on common API response structures
+    const status = res?.status ?? res?.data?.status;
+
+    if (status === 201) {
       alert('Registration successful!');
+      // Optionally, redirect to login or another page here
+    } else {
+      // Handle non-201 status codes
+      const message = res?.message ?? res?.data?.message ?? 'Something went wrong';
+      alert('Error: ' + message);
+    }
+
+    
       // Optionally, redirect to login or another page here
     } catch (error) {
       console.error('Error during registration:', error);

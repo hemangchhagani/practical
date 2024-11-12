@@ -24,24 +24,49 @@ const ResidentsItems: React.FC = () => {
   }, []);
 
   // Fetch items data from the backend
+  // const fetchResidentsData = async () => {
+  //   setLoading(true); // Show loading state
+  //   try {
+  //     const response = await getResidents(); // Adjust based on your service
+
+  //     const items = response.data || response;
+  //     console.log(items);
+  //     const formattedItems = items.map((item: any) => ({
+  //       id: item.id,
+  //       name: item.name,
+  //       category: item.category,
+  //       iddsi_level: item.iddsi_level,
+  //     }));
+  //     setResidentsData(formattedItems);
+  //   } catch (error) {
+  //     console.error("Error fetching Residents data:", error);
+  //   } finally {
+  //     setLoading(false); // Hide loading state
+  //   }
+  // };
+
   const fetchResidentsData = async () => {
-    setLoading(true); // Show loading state
-    try {
-      const response = await getResidents(); // Adjust based on your service
-      const items = response.data || response;
-      const formattedItems = items.map((item: any) => ({
-        id: item.id,
-        name: item.name,
-        category: item.category,
-        iddsi_level: item.iddsi_level,
-      }));
-      setResidentsData(formattedItems);
-    } catch (error) {
-      console.error("Error fetching Residents data:", error);
-    } finally {
-      setLoading(false); // Hide loading state
-    }
-  };
+  setLoading(true); // Show loading state
+  try {
+    const response = await getResidents(); // Adjust based on your service
+    // Directly access the `data` property to avoid issues
+    const items = response?.data?.data || [];
+    console.log(items);
+    
+    // Ensure that the items array is properly mapped
+    const formattedItems = items.map((item: any) => ({
+      id: item.id || '',
+      name: item.name || '',
+      category: item.category || '',
+      iddsi_level: item.iddsi_level || '',
+    }));
+    setResidentsData(formattedItems);
+  } catch (error) {
+    console.error("Error fetching Residents data:", error);
+  } finally {
+    setLoading(false); // Hide loading state
+  }
+};
 
   // Handle opening the form modal
   const handleShow = () => {

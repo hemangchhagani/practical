@@ -24,11 +24,13 @@ class FooditemsController
 		try {
 			$input = json_decode(file_get_contents('php://input'), true);
 			$this->service->createFoodItem($input);
-			http_response_code(201);
-			echo json_encode(['message' => 'Food item created successfully']);
+			//http_response_code(201);
+			//echo json_encode(['message' => 'Food item created successfully']);
+			$result = array('message' => 'Food item created successfully', 'status' => 201 );
+            return $result;
 		} catch (\Exception $e) {
-			http_response_code($e->getCode() ?: 500);
-			echo json_encode(['message' => $e->getMessage()]);
+			$result = array('message' => $e->getMessage() , 'status' => $e->getCode() ?: 500 );
+            return $result;
 		}
 	}
 
@@ -37,10 +39,15 @@ class FooditemsController
 	{
 		try {
 			$foodItems = $this->service->getAllFoodItems();
-			echo json_encode($foodItems);
+			//echo json_encode($foodItems);
+			$result = array('data' => $foodItems, 'status' => 200 );
+            return $result;
+
 		} catch (\Exception $e) {
-			http_response_code($e->getCode() ?: 500);
-			echo json_encode(['message' => $e->getMessage()]);
+			$result = array('message' => $e->getMessage() , 'status' => $e->getCode() ?: 500 );
+            return $result;
+			//http_response_code($e->getCode() ?: 500);
+			//echo json_encode(['message' => $e->getMessage()]);
 		}
 	}
 
@@ -49,10 +56,13 @@ class FooditemsController
 	{
 		try {
 			$foodItem = $this->service->getFoodItemById($id);
-			echo json_encode($foodItem);
+			//echo json_encode($foodItem);
+			$result = array('data' => $foodItem, 'status' => 200 );
+            return $result;
+
 		} catch (\Exception $e) {
-			http_response_code($e->getCode() ?: 500);
-			echo json_encode(['message' => $e->getMessage()]);
+			$result = array('message' => $e->getMessage() , 'status' => $e->getCode() ?: 500 );
+            return $result;
 		}
 	}
 
@@ -62,10 +72,13 @@ class FooditemsController
 		try {
 			$input = json_decode(file_get_contents('php://input'), true);
 			$this->service->updateFoodItem($id, $input);
-			echo json_encode(['message' => 'Food item updated successfully']);
+			//echo json_encode(['message' => 'Food item updated successfully']);
+			$result = array('data' =>'Food item updated successfully' , 'status' => 200 );
+            return $result;
+
 		} catch (\Exception $e) {
-			http_response_code($e->getCode() ?: 500);
-			echo json_encode(['message' => $e->getMessage()]);
+			$result = array('message' => $e->getMessage() , 'status' => $e->getCode() ?: 500 );
+            return $result;
 		}
 	}
 
@@ -76,8 +89,8 @@ class FooditemsController
 			$this->service->deleteFoodItem($id);
 			echo json_encode(['message' => 'Food item deleted successfully']);
 		} catch (\Exception $e) {
-			http_response_code($e->getCode() ?: 500);
-			echo json_encode(['message' => $e->getMessage()]);
+			$result = array('message' => $e->getMessage() , 'status' => $e->getCode() ?: 500 );
+            return $result;
 		}
 	}
 

@@ -30,7 +30,7 @@ class ResidentsService
 
     public function getResidentById($id)
     {
-        $resident = $this->repository->read($id);
+        $resident = $this->repository->read($id['id']);
         if (!$resident) {
             throw new \Exception('Resident not found', 404);
         }
@@ -43,7 +43,7 @@ class ResidentsService
             throw new \Exception('All fields are required', 400);
         }
 
-        $updated = $this->repository->update($id, $data['name'], $data['category'], $data['iddsi_level']);
+        $updated = $this->repository->update($id['id'], $data['name'], $data['category'], $data['iddsi_level']);
         if (!$updated) {
             throw new \Exception('Resident not found or update failed', 404);
         }
@@ -53,7 +53,7 @@ class ResidentsService
 
     public function deleteResident($id)
     {
-        $deleted = $this->repository->delete($id);
+        $deleted = $this->repository->delete($id['id']);
         if (!$deleted) {
             throw new \Exception('Resident not found or deletion failed', 404);
         }

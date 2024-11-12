@@ -32,7 +32,7 @@ class FoodItemsService
 
     public function getFoodItemById($id)
     {
-        $foodItem = $this->repository->read($id);
+        $foodItem = $this->repository->read($id['id']);
         if (!$foodItem) {
             throw new \Exception('Food item not found', 404);
         }
@@ -45,9 +45,9 @@ class FoodItemsService
             throw new \Exception('All fields are required', 400);
         }
 
-        $updated = $this->repository->update($id, $data['name'], $data['category'], $data['iddsi_level']);
+        $updated = $this->repository->update($id['id'], $data['name'], $data['category'], $data['iddsi_level']);
         if (!$updated) {
-            throw new \Exception('Food item not found or update failed', 404);
+            throw new \Exception('Food item not found or update failed '.$id, 404);
         }
 
         return true;
@@ -55,7 +55,7 @@ class FoodItemsService
 
     public function deleteFoodItem($id)
     {
-        $deleted = $this->repository->delete($id);
+        $deleted = $this->repository->delete($id['id']);
         if (!$deleted) {
             throw new \Exception('Food item not found or deletion failed', 404);
         }

@@ -21,7 +21,20 @@ export const AddEditResidentsItemForm: React.FC<AddEditResidantsFormProps> = ({
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<ResidentsForm>();
+    setValue, // We need this for setting default values manually
+  } = useForm<ResidentsForm>({
+    defaultValues: editMode
+      ? {
+          name: currenResidents.name,
+          category: currenResidents.category,
+          iddsi_level: currenResidents.iddsi_level,
+        }
+      : {
+          name: "",
+          category: "",
+          iddsi_level: "",
+        },
+  });
 
   const { setResidents, updateResidents } = useGetFoodItemService();
 
@@ -48,7 +61,7 @@ export const AddEditResidentsItemForm: React.FC<AddEditResidantsFormProps> = ({
               : item
           )
         );
-        alert("Item updated successfully!");
+        alert("Residents updated successfully!");
       } else {
         // Add new item
         const response = await setResidents(
@@ -57,7 +70,7 @@ export const AddEditResidentsItemForm: React.FC<AddEditResidantsFormProps> = ({
           data.iddsi_level
         );
         setResidentsData([...ResidentsData, response.data]);
-        alert("New item added successfully!");
+        alert("New Residents added successfully!");
       }
       handleClose(); // Close modal after success
     } catch (error) {
@@ -73,7 +86,7 @@ export const AddEditResidentsItemForm: React.FC<AddEditResidantsFormProps> = ({
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title">
-                {editMode ? "Edit Item" : "Add New Item"}
+                {editMode ? "Edit Residents" : "Add New Residents"}
               </h5>
               <button type="button" className="close" onClick={handleClose}>
                 <span>&times;</span>
@@ -87,7 +100,7 @@ export const AddEditResidentsItemForm: React.FC<AddEditResidantsFormProps> = ({
                     {...register("name", { required: true })}
                     type="text"
                     className="form-control"
-                    placeholder="Enter item name"
+                    placeholder="Enter Residents name"
                   />
                   {errors.name && (
                     <span className="text-danger">This field is required</span>
@@ -133,7 +146,7 @@ export const AddEditResidentsItemForm: React.FC<AddEditResidantsFormProps> = ({
                   )}
                 </div>
                 <button type="submit" className="btn btn-primary w-100">
-                  {editMode ? "Update Item" : "Add Item"}
+                  {editMode ? "Update Residents" : "Add Residents"}
                 </button>
               </form>
             </div>

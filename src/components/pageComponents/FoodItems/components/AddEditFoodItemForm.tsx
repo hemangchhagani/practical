@@ -1,12 +1,13 @@
 import { useForm } from "react-hook-form";
 import { ItemData, ItemsForm } from "../../../../types/ItemsForm";
 import useGetFoodItemService from "../hooks/useGetFoodItemService";
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from "react"; // Import useEffect
 
 interface AddEditFoodItemFormProps {
   editMode: boolean;
   handleClose: () => void;
-  setItemsData: (itemData: ItemData[]) => void;
+  setItemsData: React.Dispatch<React.SetStateAction<ItemData[]>>;
   itemsData: ItemData[];
   currentItem: ItemData;
 }
@@ -21,11 +22,22 @@ export const AddEditFoodItemForm: React.FC<AddEditFoodItemFormProps> = ({
   const {
     register,
     handleSubmit,
+    setValue, // Import setValue to update form fields
     formState: { errors },
   } = useForm<ItemsForm>();
 
   const { setItems, updateItems } = useGetFoodItemService();
   const navigate = useNavigate();
+
+  // Prefill form when in edit mode
+  useEffect(() => {
+    if (editMode && currentItem) {
+      setValue("name", currentItem.name);
+      setValue("category", currentItem.category);
+      setValue("iddsi_level", currentItem.iddsi_level);
+    }
+  }, [editMode, currentItem, setValue]);
+
   // Handle form submission
   const onSubmit = async (data: ItemsForm) => {
     try {
@@ -37,8 +49,8 @@ export const AddEditFoodItemForm: React.FC<AddEditFoodItemFormProps> = ({
           data.category,
           data.iddsi_level
         );
-        setItemsData(
-          itemsData.map((item) =>
+        setItemsData((prevItemsData) =>
+          prevItemsData.map((item) =>
             item.id === currentItem.id
               ? {
                   ...item,
@@ -50,7 +62,6 @@ export const AddEditFoodItemForm: React.FC<AddEditFoodItemFormProps> = ({
           )
         );
         alert("Item updated successfully!");
-        
       } else {
         // Add new item
         const response = await setItems(
@@ -58,11 +69,25 @@ export const AddEditFoodItemForm: React.FC<AddEditFoodItemFormProps> = ({
           data.category,
           data.iddsi_level
         );
-        setItemsData([...itemsData, response.data]);
+
+        setItemsData((prevItemsData) => {
+          const maxId = prevItemsData.length > 0
+            ? Math.max(...prevItemsData.map((item) => item.id))
+            : 0;
+
+          const newItem: ItemData = {
+            id: maxId + 1,
+            name: response.data.name,
+            category: response.data.category,
+            iddsi_level: response.data.iddsi_level,
+          };
+
+          return [...prevItemsData, newItem];
+        });
+
         alert("New item added successfully!");
-        
       }
-      navigate('/food-items'); // Adjust the route as necessary
+      navigate("/food-items"); // Adjust the route as necessary
       handleClose(); // Close modal after success
     } catch (error) {
       console.error("Error submitting form:", error);
