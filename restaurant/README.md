@@ -53,4 +53,4 @@ for example restaurants.sql  upload database using phpmyadmin simple query run.
 
 # Start your php server
 Run the following commands to start server 
-php -S localhost:8080
+php -S localhost:8000
