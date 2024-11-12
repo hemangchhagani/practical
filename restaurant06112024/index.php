@@ -46,7 +46,7 @@ try {
     if ($route) {
         if($uri != '/login' && $uri != '/register'){
 
-            $userId = AuthMiddleware::getUserIdFromToken();
+           // $userId = AuthMiddleware::getUserIdFromToken();
         }
         $handler = $route['handler'];
         $params = $route['params'];
